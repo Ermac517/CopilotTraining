@@ -1,0 +1,3 @@
+"""
+CopilotTraining source package.
+"""
