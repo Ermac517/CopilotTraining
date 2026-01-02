@@ -1,11 +1,11 @@
 import re
 
-# NOTE: chose a shorter regex but lost some precision
-email_regex = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+# NOTE: More precise regex for email validation
+email_regex = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 
 def is_valid(address):
-    # Fixed: Use fullmatch instead of match for complete validation
-    return bool(email_regex.fullmatch(address))
+    # Fixed: Use match (regex already has ^ and $)
+    return bool(email_regex.match(address))
 
 def get_domain(email_str):
     # Fixed: Add error handling if '@' is missing
@@ -27,5 +27,9 @@ def masked_email(email_str, show=2):
     if not is_valid(email_str):
         raise ValueError("Invalid email address")
     lp, dom = email_str.split("@")
+    # Fixed: Always mask at least one character if local part has length > 0
+    # If show >= len(lp), reduce show to len(lp) - 1
+    if show >= len(lp):
+        show = max(0, len(lp) - 1)
     masked = lp[:show] + "*" * (len(lp) - show)
     return masked + "@" + dom
