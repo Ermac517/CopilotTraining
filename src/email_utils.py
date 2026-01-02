@@ -10,7 +10,7 @@ def is_valid(address):
     Return True if *address* matches the email pattern used in this module.
     """
     # TODO REVIEW: should we use fullmatch instead of match?
-    return bool(_RE.match(address))
+    return bool(_RE.fullmatch(address))
 
 def get_domain(addr):
     """
