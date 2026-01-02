@@ -20,10 +20,18 @@ def get_domain(addr):
     return addr[addr.rfind("@") + 1:]           # BUG: returns whole string if "@" missing
 
 def local_part(addr):
-    """
-    Return the local part of *addr*, i.e. everything before the first "@".
-    """
-    return addr.split("@")[0]                   # lacks error handling for malformed addr
+    idx = addr.rfind("@")
+    if idx == -1:
+        # No "@" present; there is no domain part
+        return ""
+    return addr[idx + 1:]
+
+def local_part(addr):
+    # For malformed addresses without "@", return the entire string (current behavior),
+    # but handle the case explicitly instead of relying on split()[0].
+    if "@" not in addr:
+        return addr
+    return addr.split("@", 1)[0]
 
 def masked_email(e, show=2):
     """
