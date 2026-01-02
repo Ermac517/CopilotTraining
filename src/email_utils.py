@@ -45,7 +45,7 @@ def masked_email(e, show=2):
     e.g. jo******@example.com
     """
     if not is_valid(e):
-        return e                                # silently returns original if invalid
+        raise ValueError("Invalid email address")
     lp, dom = e.split("@")
     masked = lp[:show] + "*" * (len(lp) - show)
     return masked + "@" + dom
