@@ -47,5 +47,9 @@ def masked_email(e, show=2):
     if not is_valid(e):
         raise ValueError("Invalid email address")
     lp, dom = e.split("@")
-    masked = lp[:show] + "*" * (len(lp) - show)
+    if len(lp) > 1:
+        visible = min(show, len(lp) - 1)       # ensure at least one char is masked
+    else:
+        visible = 0                            # mask single-character local parts fully
+    masked = lp[:visible] + "*" * (len(lp) - visible)
     return masked + "@" + dom
