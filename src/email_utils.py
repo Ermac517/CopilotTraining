@@ -16,9 +16,15 @@ def get_domain(addr):
     """
     Return the domain portion of *addr*, i.e. everything after the last "@".
     """
-    # returns everything after the last "@"
-    return addr[addr.rfind("@") + 1:]           # BUG: returns whole string if "@" missing
+    """
+    Return the domain part of an email address (substring after the last "@").
 
+    If "@" is not present or there is no text after "@", return an empty string.
+    """
+    at_index = addr.rfind("@")
+    if at_index == -1 or at_index == len(addr) - 1:
+        return ""
+    return addr[at_index + 1:]
 def local_part(addr):
     idx = addr.rfind("@")
     if idx == -1:
