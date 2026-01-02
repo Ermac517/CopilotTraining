@@ -114,7 +114,7 @@ class TestLocalPart:
         assert local_part("user123@example.com") == "user123"
     
     def test_email_with_multiple_at_signs(self):
-        """Test email with multiple @ signs (gets local part before first @)."""
+        """Test email with multiple @ signs (split on first @ returns local part)."""
         assert local_part("user@name@example.com") == "user"
     
     def test_no_at_sign(self):
